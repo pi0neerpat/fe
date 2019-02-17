@@ -14,7 +14,10 @@ web3.eth.sendTransaction({
 // End Step 3
 };
 
-
+var url_string =  window.location.href
+var url = new URL(url_string);
+var c = url.searchParams.get("pr");
+console.log(c);
 
 // Initialize elements and events (no need to change)
 const defaultAmount = 0.01;
