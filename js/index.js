@@ -51,7 +51,7 @@ const defaultAddress = "0x22b05d73097c0a2440d29af61db4b4ed3803e55e";
 const inputAmount = document.getElementById("input-amount");
 inputAmount.setAttribute("placeholder", defaultAmount);
 inputAmount.setAttribute("value", defaultAmount);
-const inputAddress = document.getElementById("input-address");
+//const inputAddress = document.getElementById("input-address");
 inputAddress.setAttribute("placeholder", defaultAddress);
 inputAddress.innerText = defaultAddress;
 document.getElementById("btn-send").onclick = function() {
