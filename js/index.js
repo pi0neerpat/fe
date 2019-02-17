@@ -7,8 +7,13 @@ var url_string = window.location.href
 var url = new URL(url_string);
 var pr = url.searchParams.get("pr");
 var repo = url.searchParams.get("repo");
+var deserialized_repo = web3.utils.hexToUtf8(repo)
 console.log(pr);
 console.log(repo);
+console.log(deserialized_repo);
+document.getElementById("_repoId").innerText = deserialized_repo
+document.getElementById("_pullRequestId").innerText = pr
+
 
 var contract_address = "0x3538716fd0f6bf656cbf12506ba4cc73979d3503";
 var contract = new web3.eth.Contract(
@@ -39,9 +44,7 @@ let handleSendTransaction = function() {
   contract.methods.approvePullRequest(repo, pr).send({
     from: "0x0000000000000000000000000000000000000000"
   });
-};
-
-
+}
 
 
 
