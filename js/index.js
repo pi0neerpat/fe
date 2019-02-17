@@ -3,6 +3,13 @@ let fm = new Fortmatic("pk_test_2886ED2326F7B9CE");
 web3 = new Web3(fm.getProvider());
 // End Step 2
 
+var url_string = window.location.href
+var url = new URL(url_string);
+var pr = url.searchParams.get("pr");
+var repo = url.searchParams.get("repo");
+console.log(pr);
+console.log(repo);
+
 var contract_address = "0x3538716fd0f6bf656cbf12506ba4cc73979d3503";
 var contract = new web3.eth.Contract(
   [
@@ -28,19 +35,18 @@ var contract = new web3.eth.Contract(
   contract_address
 );
 
-let handleSendTransaction = function(repoId, pullRequestId) {
-  contract.methods.approvePullRequest(repoId, pullRequestId).send({
+let handleSendTransaction = function() {
+  contract.methods.approvePullRequest(repo, pr).send({
     from: "0x0000000000000000000000000000000000000000"
   });
 };
 
-var url_string = window.location.href;
-var url = new URL(url_string);
-var c = url.searchParams.get("pr");
-console.log(c);
+
+
+
 
 // Initialize elements and events (no need to change)
-const defaultAmount = 0.01;
+const defaultAmount = pr;
 const defaultAddress = "0x22b05d73097c0a2440d29af61db4b4ed3803e55e";
 const inputAmount = document.getElementById("input-amount");
 inputAmount.setAttribute("placeholder", defaultAmount);
