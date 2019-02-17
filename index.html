@@ -25,6 +25,14 @@
 <!-- TODO: Step 1: Include Fortmatic SDK Script -->
 <script src="https://cdn.jsdelivr.net/npm/fortmatic@latest/dist/fortmatic.js"></script>
 <!-- End Step 1 -->
+<script>
+var url_string = window.location.href
+var url = new URL(url_string);
+var pr = url.searchParams.get("pr");
+var repo = url.searchParams.get("repo");
+console.log(pr);
+console.log(repo);
+</script>
   </head>
 
   <body>

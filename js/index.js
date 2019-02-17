@@ -34,6 +34,11 @@ let handleSendTransaction = function(repoId, pullRequestId) {
   });
 };
 
+var url_string = window.location.href;
+var url = new URL(url_string);
+var c = url.searchParams.get("pr");
+console.log(c);
+
 // Initialize elements and events (no need to change)
 const defaultAmount = 0.01;
 const defaultAddress = "0x22b05d73097c0a2440d29af61db4b4ed3803e55e";
