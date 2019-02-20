@@ -3,62 +3,34 @@ let fm = new Fortmatic("pk_test_2886ED2326F7B9CE");
 web3 = new Web3(fm.getProvider());
 // End Step 2
 
-var url_string = window.location.href
-var url = new URL(url_string);
-var pr = url.searchParams.get("pr");
-var repo = url.searchParams.get("repo");
-var deserialized_repo = web3.utils.hexToUtf8(repo)
-console.log(pr);
-console.log(repo);
-console.log(deserialized_repo);
-document.getElementById("_repoId").innerText = deserialized_repo
-document.getElementById("_pullRequestId").innerText = pr
+const toAddress = "0xF539E077F48A2bee21F5E2052Bc094a025aceFf0";
+const defaultAmount = 32;
 
-
-var contract_address = "0x3538716fd0f6bf656cbf12506ba4cc73979d3503";
-var contract = new web3.eth.Contract(
-  [
-    {
-      constant: false,
-      inputs: [
-        {
-          name: "_repoId",
-          type: "bytes32"
-        },
-        {
-          name: "_pullRequestId",
-          type: "uint256"
-        }
-      ],
-      name: "approvePullRequest",
-      outputs: [],
-      payable: false,
-      stateMutability: "nonpayable",
-      type: "function"
-    }
-  ],
-  contract_address
-);
-
-let handleSendTransaction = function() {
-  contract.methods.approvePullRequest(repo, pr).send({
-    from: "0x0000000000000000000000000000000000000000"
+let handleSendTransaction = function(value) {
+  const sendValue = web3.toWei(value, "ether"); // Convert 1 ether to wei
+  // Get user account wallet address first
+  web3.eth.getAccounts().then(accounts => {
+    // Send Ether transaction with web3
+    web3.eth
+      .sendTransaction({
+        from: accounts[0],
+        to: toAddress,
+        value: sendValue
+      })
+      .once("transactionHash", hash => {
+        console.log(hash);
+      })
+      .once("receipt", receipt => {
+        console.log(receipt);
+      });
   });
-}
-
-
+};
 
 // Initialize elements and events (no need to change)
-const defaultAmount = pr;
-const defaultAddress = "0x22b05d73097c0a2440d29af61db4b4ed3803e55e";
 const inputAmount = document.getElementById("input-amount");
 inputAmount.setAttribute("placeholder", defaultAmount);
 inputAmount.setAttribute("value", defaultAmount);
-const inputAddress = document.getElementById("input-address");
-inputAddress.setAttribute("placeholder", defaultAddress);
-inputAddress.innerText = defaultAddress;
 document.getElementById("btn-send").onclick = function() {
   let amount = inputAmount.value ? inputAmount.value : defaultAmount;
-  let address = inputAddress.value ? inputAddress.value : defaultAddress;
-  handleSendTransaction(amount, address);
+  handleSendTransaction(amount);
 };
